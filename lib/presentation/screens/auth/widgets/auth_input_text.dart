@@ -25,15 +25,16 @@ class AuthInputText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          color: AppColors.lightElv1,
-          borderRadius: BorderRadius.circular(2.w),
-          boxShadow: [
-            BoxShadow(
-                offset: Offset(0.5.w, 0.5.w),
-                color: AppColors.darkElv0.withOpacity(0.1),
-                spreadRadius: 0.1.w,
-                blurRadius: 0.1.w),
-          ]),
+        color: AppColors.lightElv1,
+        borderRadius: BorderRadius.circular(2.w),
+        boxShadow: [
+          BoxShadow(
+              offset: Offset(0.5.w, 0.5.w),
+              color: AppColors.darkElv0.withOpacity(0.1),
+              spreadRadius: 0.1.w,
+              blurRadius: 0.1.w),
+        ],
+      ),
       child: TextField(
         controller: controller,
         obscureText: isPassword ?? false,
