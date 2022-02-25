@@ -167,7 +167,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         text: "REGISTER",
                         onPress: () => Navigator.pushNamedAndRemoveUntil(
                           context,
-                          AppRouter.landingScreen,
+                          AppRouter.takePicturesPage,
                           (route) => false,
                         ),
                       ),

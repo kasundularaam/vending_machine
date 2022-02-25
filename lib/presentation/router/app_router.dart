@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:vending_machine/data/models/beverage.dart';
 import 'package:vending_machine/presentation/screens/add_payment_method/add_payments_method.dart';
 import 'package:vending_machine/presentation/screens/auth/register_screen/register_page.dart';
+import 'package:vending_machine/presentation/screens/auth/take_pictures_screen/take_pictures_page.dart';
 import 'package:vending_machine/presentation/screens/payment_screen/payment_page.dart';
 
 import '../../core/exceptions/route_exception.dart';
@@ -16,6 +17,7 @@ class AppRouter {
   static const String registerPage = '/registerPage';
   static const String paymentPage = '/paymentPage';
   static const String addPaymentMethodPage = '/addPaymentMethodPage';
+  static const String takePicturesPage = '/takePicturesPage';
 
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -45,6 +47,10 @@ class AppRouter {
       case addPaymentMethodPage:
         return MaterialPageRoute(
           builder: (_) => const AddPaymentMethodPage(),
+        );
+      case takePicturesPage:
+        return MaterialPageRoute(
+          builder: (_) => const TakePicturesPage(),
         );
       default:
         throw const RouteException('Route not found!');
