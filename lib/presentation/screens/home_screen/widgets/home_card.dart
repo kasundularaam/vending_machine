@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
-import 'package:vending_machine/presentation/globle_widgets/check_out_button.dart';
 import 'package:vending_machine/presentation/router/app_router.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../data/models/beverage.dart';
+import '../../../globlal_widgets/check_out_button.dart';
 
 class HomeCard extends StatelessWidget {
   final Beverage beverage;

@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
 import 'package:vending_machine/data/models/beverage.dart';
-import 'package:vending_machine/presentation/globle_widgets/check_out_button.dart';
 import 'package:vending_machine/presentation/router/app_router.dart';
-import 'package:vending_machine/presentation/screens/payment_screen/widgets/payment_methode_card.dart';
+import 'package:vending_machine/presentation/screens/payment_screen/widgets/payment_method_card.dart';
 
 import '../../../core/constants/app_colors.dart';
+import '../../globlal_widgets/check_out_button.dart';
 
 class PaymentPage extends StatefulWidget {
   final Beverage beverage;

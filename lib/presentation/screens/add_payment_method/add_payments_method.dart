@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-
-import '../../../core/constants/app_colors.dart';
 import 'package:sizer/sizer.dart';
 
-import '../../globle_widgets/check_out_button.dart';
+import '../../../core/constants/app_colors.dart';
+import '../../globlal_widgets/check_out_button.dart';
 
 class AddPaymentMethodPage extends StatefulWidget {
   const AddPaymentMethodPage({Key? key}) : super(key: key);
