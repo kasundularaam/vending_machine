@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:vending_machine/data/models/new_vm_user_images.dart';
-import 'package:vending_machine/data/repositories/repository.dart';
 
+import '../../../data/http/user_services.dart';
+import '../../../data/models/new_vm_user_images.dart';
 import '../../../data/models/vm_user_images.dart';
 
 part 'register_images_state.dart';
@@ -14,7 +14,7 @@ class RegisterImagesCubit extends Cubit<RegisterImagesState> {
     try {
       emit(RegisterImagesLoading());
       final VMUserImages vmUserImages =
-          await Repository.addVMUserImages(newVMUserImages: newVMUserImages);
+          await UserServices.addVMUserImages(newVMUserImages: newVMUserImages);
       emit(RegisterImagesSucceed(vmUserImages: vmUserImages));
     } catch (e) {
       emit(RegisterImagesFailed(errorMsg: e.toString()));

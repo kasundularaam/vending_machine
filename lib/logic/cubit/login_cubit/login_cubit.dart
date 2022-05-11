@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
+import '../../../data/http/user_services.dart';
 import '../../../data/models/vm_user.dart';
-import '../../../data/repositories/repository.dart';
 
 part 'login_state.dart';
 
@@ -13,7 +13,7 @@ class LoginCubit extends Cubit<LoginState> {
     try {
       emit(LoginLoading());
       final VMUser vmUser =
-          await Repository.login(email: email, password: password);
+          await UserServices.login(email: email, password: password);
       emit(LoginSucceed(vmUser: vmUser));
     } catch (e) {
       emit(LoginFailed(errorMsg: e.toString()));
