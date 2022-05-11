@@ -1,10 +1,11 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
-import 'package:vending_machine/core/constants/app_colors.dart';
-import 'package:vending_machine/presentation/router/app_router.dart';
-import 'package:vending_machine/presentation/screens/auth/widgets/auth_button.dart';
-import 'package:vending_machine/presentation/screens/auth/widgets/auth_input_text.dart';
+
+import '../../../../core/constants/app_colors.dart';
+import '../../../router/app_router.dart';
+import '../widgets/auth_button.dart';
+import '../widgets/auth_input_text.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -16,6 +17,8 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+  login() {}
 
   @override
   Widget build(BuildContext context) {

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:vending_machine/data/models/beverage.dart';
-import 'package:vending_machine/presentation/screens/add_payment_method/add_payments_method.dart';
-import 'package:vending_machine/presentation/screens/auth/register_screen/register_page.dart';
-import 'package:vending_machine/presentation/screens/auth/take_pictures_screen/take_pictures_page.dart';
-import 'package:vending_machine/presentation/screens/payment_screen/payment_page.dart';
 
 import '../../core/exceptions/route_exception.dart';
+import '../../data/models/beverage.dart';
+import '../screens/add_payment_method/add_payments_method.dart';
 import '../screens/auth/login_screen/login_page.dart';
+import '../screens/auth/register_screen/register_page.dart';
+import '../screens/auth/take_pictures_screen/take_pictures_page.dart';
 import '../screens/home_screen/home_screen.dart';
 import '../screens/landing_screen/landing_screen.dart';
+import '../screens/payment_screen/payment_page.dart';
 
 class AppRouter {
   static const String landingScreen = '/';
