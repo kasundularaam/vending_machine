@@ -7,9 +7,11 @@ class LoginInitial extends LoginState {}
 
 class LoginLoading extends LoginState {}
 
-class LoginSucceed extends LoginState {
+class LoginAdmin extends LoginState {}
+
+class LoginUser extends LoginState {
   final VMUser vmUser;
-  LoginSucceed({
+  LoginUser({
     required this.vmUser,
   });
 
@@ -17,14 +19,14 @@ class LoginSucceed extends LoginState {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is LoginSucceed && other.vmUser == vmUser;
+    return other is LoginUser && other.vmUser == vmUser;
   }
 
   @override
   int get hashCode => vmUser.hashCode;
 
   @override
-  String toString() => 'LoginSucceed(vmUser: $vmUser)';
+  String toString() => 'LoginUser(vmUser: $vmUser)';
 }
 
 class LoginFailed extends LoginState {

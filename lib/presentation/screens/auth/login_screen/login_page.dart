@@ -1,8 +1,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
-
 import '../../../../core/constants/app_colors.dart';
+import '../../../../logic/cubit/login_cubit/login_cubit.dart';
 import '../../../router/app_router.dart';
 import '../widgets/auth_button.dart';
 import '../widgets/auth_input_text.dart';
@@ -118,13 +119,35 @@ class _LoginPageState extends State<LoginPage> {
                       height: 3.h,
                     ),
                     Center(
-                      child: AuthButton(
-                        text: "LOGIN",
-                        onPress: () => Navigator.pushNamedAndRemoveUntil(
-                          context,
-                          AppRouter.homePage,
-                          (route) => false,
-                        ),
+                      child: BlocConsumer<LoginCubit, LoginState>(
+                        listener: (context, state) {
+                          if (state is LoginFailed) {
+                            SnackBar snackBar =
+                                SnackBar(content: Text(state.errorMsg));
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
+                          }
+                          if (state is LoginUser) {
+                            Navigator.pushNamedAndRemoveUntil(
+                              context,
+                              AppRouter.landingPage,
+                              (route) => false,
+                            );
+                          }
+                          if (state is LoginAdmin) {
+                            Navigator.pushNamedAndRemoveUntil(
+                              context,
+                              AppRouter.deviceIdPage,
+                              (route) => false,
+                            );
+                          }
+                        },
+                        builder: (context, state) {
+                          return AuthButton(
+                            text: "LOGIN",
+                            onPress: () => login(),
+                          );
+                        },
                       ),
                     ),
                     SizedBox(
