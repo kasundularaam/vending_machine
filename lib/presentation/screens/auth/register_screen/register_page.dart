@@ -1,6 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
+import 'package:vending_machine/logic/cubit/register_cubit/register_cubit.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../router/app_router.dart';
@@ -163,13 +165,40 @@ class _RegisterPageState extends State<RegisterPage> {
                       height: 3.h,
                     ),
                     Center(
-                      child: AuthButton(
-                        text: "REGISTER",
-                        onPress: () => Navigator.pushNamedAndRemoveUntil(
-                          context,
-                          AppRouter.takePicturesPage,
-                          (route) => false,
-                        ),
+                      child: BlocConsumer<RegisterCubit, RegisterState>(
+                        listener: (context, state) {
+                          if (state is RegisterFailed) {
+                            SnackBar snackBar =
+                                SnackBar(content: Text(state.errorMsg));
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
+                          }
+                          if (state is RegisterUser) {
+                            Navigator.pushNamedAndRemoveUntil(
+                              context,
+                              AppRouter.landingPage,
+                              (route) => false,
+                            );
+                          }
+                          if (state is RegisterToMachine) {
+                            Navigator.pushNamedAndRemoveUntil(
+                              context,
+                              AppRouter.homePage,
+                              (route) => false,
+                              arguments: state.deviceId,
+                            );
+                          }
+                        },
+                        builder: (context, state) {
+                          return AuthButton(
+                            text: "REGISTER",
+                            onPress: () => Navigator.pushNamedAndRemoveUntil(
+                              context,
+                              AppRouter.takePicturesPage,
+                              (route) => false,
+                            ),
+                          );
+                        },
                       ),
                     ),
                     SizedBox(

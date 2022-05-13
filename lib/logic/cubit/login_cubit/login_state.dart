@@ -29,6 +29,30 @@ class LoginUser extends LoginState {
   String toString() => 'LoginUser(vmUser: $vmUser)';
 }
 
+class LoginToMachine extends LoginState {
+  final VMUser vmUser;
+  final String deviceId;
+  LoginToMachine({
+    required this.vmUser,
+    required this.deviceId,
+  });
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is LoginToMachine &&
+        other.vmUser == vmUser &&
+        other.deviceId == deviceId;
+  }
+
+  @override
+  int get hashCode => vmUser.hashCode ^ deviceId.hashCode;
+
+  @override
+  String toString() => 'LoginToMachine(vmUser: $vmUser, deviceId: $deviceId)';
+}
+
 class LoginFailed extends LoginState {
   final String errorMsg;
   LoginFailed({

@@ -2,10 +2,10 @@ import 'package:http/http.dart' as http;
 
 import '../../core/converters/http_list_converter.dart';
 import '../data_providers/data_provider.dart';
-import '../models/category.dart';
+import '../models/product_category.dart';
 
 class CategoryServices {
-  static Future<List<Category>> getAllCategories() async {
+  static Future<List<ProductCategory>> getAllCategories() async {
     try {
       final res = await http.get(
         Uri.parse(
@@ -21,14 +21,14 @@ class CategoryServices {
     }
   }
 
-  static Future<Category> getCategory({required int id}) async {
+  static Future<ProductCategory> getCategory({required int id}) async {
     try {
       final res = await http.get(
         Uri.parse(
           DataProvider.cartById(id),
         ),
       );
-      if (res.statusCode == 200) return Category.fromJson(res.body);
+      if (res.statusCode == 200) return ProductCategory.fromJson(res.body);
       throw "Failed to load data";
     } catch (e) {
       throw e.toString();

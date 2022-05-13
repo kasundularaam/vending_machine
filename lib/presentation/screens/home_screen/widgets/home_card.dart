@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
-import 'package:vending_machine/presentation/router/app_router.dart';
 
 import '../../../../core/constants/app_colors.dart';
-import '../../../../data/models/beverage.dart';
+import '../../../../data/models/product.dart';
 import '../../../globlal_widgets/check_out_button.dart';
+import '../../../router/app_router.dart';
 
 class HomeCard extends StatelessWidget {
-  final Beverage beverage;
+  final Product product;
   const HomeCard({
     Key? key,
-    required this.beverage,
+    required this.product,
   }) : super(key: key);
 
   @override
@@ -49,7 +49,7 @@ class HomeCard extends StatelessWidget {
                             ClipRRect(
                               borderRadius: BorderRadius.circular(3.w),
                               child: Image.asset(
-                                beverage.image,
+                                "assets/images/${product.category.toString()}",
                                 width: 30.w,
                                 height: 30.w,
                                 fit: BoxFit.cover,
@@ -63,7 +63,7 @@ class HomeCard extends StatelessWidget {
                                 children: [
                                   Wrap(children: [
                                     Text(
-                                      beverage.name,
+                                      product.title,
                                       maxLines: 3,
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
@@ -77,7 +77,7 @@ class HomeCard extends StatelessWidget {
                                     height: 2.h,
                                   ),
                                   Text(
-                                    "${beverage.price}\$",
+                                    "${product.price}\$",
                                     style: TextStyle(
                                       color: AppColors.primaryColor,
                                       fontSize: 22.sp,
@@ -94,7 +94,7 @@ class HomeCard extends StatelessWidget {
                         ),
                         Wrap(children: [
                           Text(
-                            beverage.description,
+                            product.lockerId,
                             style: TextStyle(
                               color: AppColors.darkElv1,
                               fontSize: 14.sp,
@@ -108,7 +108,7 @@ class HomeCard extends StatelessWidget {
                           onPress: () {
                             Navigator.pop(sheetContext);
                             Navigator.pushNamed(context, AppRouter.paymentPage,
-                                arguments: beverage);
+                                arguments: product);
                           },
                           text: "Proceed To Pay",
                         )
@@ -137,7 +137,7 @@ class HomeCard extends StatelessWidget {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(3.w),
                   child: Image.asset(
-                    beverage.image,
+                    "assets/images/${product.category.toString()}",
                     height: 12.h,
                     fit: BoxFit.cover,
                   ),
@@ -152,7 +152,7 @@ class HomeCard extends StatelessWidget {
                     Expanded(
                       child: Wrap(children: [
                         Text(
-                          beverage.name,
+                          product.title,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
@@ -167,7 +167,7 @@ class HomeCard extends StatelessWidget {
                       width: 2.w,
                     ),
                     Text(
-                      "${beverage.price}\$",
+                      "${product.price}\$",
                       style: TextStyle(
                         color: AppColors.primaryColor,
                         fontSize: 15.sp,
@@ -181,7 +181,7 @@ class HomeCard extends StatelessWidget {
                 ),
                 Wrap(children: [
                   Text(
-                    beverage.description,
+                    product.lockerId,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(

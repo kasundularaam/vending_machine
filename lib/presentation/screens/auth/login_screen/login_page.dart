@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
+import 'package:vending_machine/logic/cubit/register_images_cubit/register_images_cubit.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../logic/cubit/login_cubit/login_cubit.dart';
 import '../../../router/app_router.dart';
@@ -141,8 +142,21 @@ class _LoginPageState extends State<LoginPage> {
                               (route) => false,
                             );
                           }
+                          if (state is LoginToMachine) {
+                            Navigator.pushNamedAndRemoveUntil(
+                              context,
+                              AppRouter.homePage,
+                              (route) => false,
+                              arguments: state.deviceId,
+                            );
+                          }
                         },
                         builder: (context, state) {
+                          if (state is RegisterImagesLoading) {
+                            return const CircularProgressIndicator(
+                              color: AppColors.primaryColor,
+                            );
+                          }
                           return AuthButton(
                             text: "LOGIN",
                             onPress: () => login(),

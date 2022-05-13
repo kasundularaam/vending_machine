@@ -20,11 +20,12 @@ class RegisterCubit extends Cubit<RegisterState> {
         final VMUser vmUser =
             await UserServices.addVMUser(newVMUser: newVMUser);
         await SharedServices.loginAsUser(uid: vmUser.id);
-        emit(RegisterSucceed(vmUser: vmUser));
+        emit(RegisterUser(vmUser: vmUser));
       } else {
+        final String deviceId = await SharedServices.getDeviceId();
         final VMUser vmUser =
             await UserServices.addVMUser(newVMUser: newVMUser);
-        emit(RegisterSucceed(vmUser: vmUser));
+        emit(RegisterToMachine(vmUser: vmUser, deviceId: deviceId));
       }
     } catch (e) {
       emit(RegisterFailed(errorMsg: e.toString()));

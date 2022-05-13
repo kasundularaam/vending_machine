@@ -1,12 +1,12 @@
 import 'dart:convert';
 
-class Category {
+class ProductCategory {
   final int id;
   final String title;
   final int parent_category_id;
   final String created_at;
   final String updated_at;
-  Category({
+  ProductCategory({
     required this.id,
     required this.title,
     required this.parent_category_id,
@@ -14,14 +14,14 @@ class Category {
     required this.updated_at,
   });
 
-  Category copyWith({
+  ProductCategory copyWith({
     int? id,
     String? title,
     int? parent_category_id,
     String? created_at,
     String? updated_at,
   }) {
-    return Category(
+    return ProductCategory(
       id: id ?? this.id,
       title: title ?? this.title,
       parent_category_id: parent_category_id ?? this.parent_category_id,
@@ -40,8 +40,8 @@ class Category {
     };
   }
 
-  factory Category.fromMap(Map<String, dynamic> map) {
-    return Category(
+  factory ProductCategory.fromMap(Map<String, dynamic> map) {
+    return ProductCategory(
       id: map['id']?.toInt() ?? 0,
       title: map['title'] ?? '',
       parent_category_id: map['parent_category_id']?.toInt() ?? 0,
@@ -52,19 +52,19 @@ class Category {
 
   String toJson() => json.encode(toMap());
 
-  factory Category.fromJson(String source) =>
-      Category.fromMap(json.decode(source));
+  factory ProductCategory.fromJson(String source) =>
+      ProductCategory.fromMap(json.decode(source));
 
   @override
   String toString() {
-    return 'Category(id: $id, title: $title, parent_category_id: $parent_category_id, created_at: $created_at, updated_at: $updated_at)';
+    return 'ProductCategory(id: $id, title: $title, parent_category_id: $parent_category_id, created_at: $created_at, updated_at: $updated_at)';
   }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is Category &&
+    return other is ProductCategory &&
         other.id == id &&
         other.title == title &&
         other.parent_category_id == parent_category_id &&

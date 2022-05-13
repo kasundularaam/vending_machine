@@ -25,9 +25,10 @@ class LoginCubit extends Cubit<LoginState> {
           await SharedServices.loginAsUser(uid: vmUser.id);
           emit(LoginUser(vmUser: vmUser));
         } else {
+          final String deviceId = await SharedServices.getDeviceId();
           final VMUser vmUser =
               await UserServices.login(email: email, password: password);
-          emit(LoginUser(vmUser: vmUser));
+          emit(LoginToMachine(vmUser: vmUser, deviceId: deviceId));
         }
       }
     } catch (e) {

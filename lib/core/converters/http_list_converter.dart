@@ -1,9 +1,8 @@
 import 'dart:convert';
 
-import 'package:vending_machine/data/models/cart_item.dart';
-import 'package:vending_machine/data/models/product.dart';
-
-import '../../data/models/category.dart';
+import '../../data/models/cart_item.dart';
+import '../../data/models/product.dart';
+import '../../data/models/product_category.dart';
 import '../../data/models/vm_user.dart';
 
 class HttpListConverter {
@@ -16,11 +15,11 @@ class HttpListConverter {
         .toList();
   }
 
-  static List<Category> parseCategories(String responseBody) {
+  static List<ProductCategory> parseCategories(String responseBody) {
     final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
     return parsed
-        .map<Category>(
-          (json) => Category.fromMap(json),
+        .map<ProductCategory>(
+          (json) => ProductCategory.fromMap(json),
         )
         .toList();
   }
