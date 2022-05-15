@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:vending_machine/data/models/vm_user.dart';
 
 import '../../../logic/cubit/landing_cubit/landing_cubit.dart';
 import '../../router/app_router.dart';
@@ -7,9 +8,10 @@ import '../../router/app_router.dart';
 class LandingPage extends StatelessWidget {
   const LandingPage({Key? key}) : super(key: key);
 
-  void navigateToHome(BuildContext context) =>
+  void navigateToHome(BuildContext context, VMUser vmUser) =>
       waiting().then((value) => Navigator.pushNamedAndRemoveUntil(
-          context, AppRouter.loginPage, (route) => false));
+          context, AppRouter.scannerPage, (route) => false,
+          arguments: vmUser));
 
   void navigateToLogin(BuildContext context) =>
       waiting().then((value) => Navigator.pushNamedAndRemoveUntil(
@@ -19,6 +21,7 @@ class LandingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    BlocProvider.of<LandingCubit>(context).load();
     return BlocListener<LandingCubit, LandingState>(
       listener: (context, state) {
         if (state is LandingFailed) {
@@ -28,8 +31,8 @@ class LandingPage extends StatelessWidget {
         if (state is LandingToAuth) {
           navigateToLogin(context);
         }
-        if (state is LandingToHome) {
-          navigateToHome(context);
+        if (state is LandingToScanner) {
+          navigateToHome(context, state.vmUser);
         }
       },
       child: Scaffold(

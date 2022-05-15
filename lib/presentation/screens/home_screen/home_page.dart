@@ -1,21 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
+
 import 'package:vending_machine/data/models/product.dart';
 import 'package:vending_machine/data/models/product_category.dart';
+import 'package:vending_machine/data/models/vm_user.dart';
 import 'package:vending_machine/logic/cubit/products_cubit/products_cubit.dart';
 
 import '../../../core/constants/app_colors.dart';
-import '../../../data/data_providers/data_provider.dart';
 import '../../../logic/cubit/timer_cubit/timer_cubit.dart';
 import '../../router/app_router.dart';
 import 'widgets/home_card.dart';
 
 class HomePage extends StatelessWidget {
   final String deviceId;
+  final VMUser vmUser;
   const HomePage({
     Key? key,
     required this.deviceId,
+    required this.vmUser,
   }) : super(key: key);
 
   @override

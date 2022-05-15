@@ -12,7 +12,7 @@ class DeviceIdCubit extends Cubit<DeviceIdState> {
     try {
       emit(DeviceIdLoading());
       await SharedServices.setDeviceId(id: id);
-      await SharedServices.loginAsMachine();
+      await SharedServices.addMachine();
     } catch (e) {
       emit(DeviceIdFailed(errorMsg: e.toString()));
     }

@@ -7,34 +7,9 @@ class RegisterInitial extends RegisterState {}
 
 class RegisterLoading extends RegisterState {}
 
-class RegisterToMachine extends RegisterState {
+class RegisterSucceed extends RegisterState {
   final VMUser vmUser;
-  final String deviceId;
-  RegisterToMachine({
-    required this.vmUser,
-    required this.deviceId,
-  });
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is RegisterToMachine &&
-        other.vmUser == vmUser &&
-        other.deviceId == deviceId;
-  }
-
-  @override
-  int get hashCode => vmUser.hashCode ^ deviceId.hashCode;
-
-  @override
-  String toString() =>
-      'RegisterToMachine(vmUser: $vmUser, deviceId: $deviceId)';
-}
-
-class RegisterUser extends RegisterState {
-  final VMUser vmUser;
-  RegisterUser({
+  RegisterSucceed({
     required this.vmUser,
   });
 
@@ -42,14 +17,14 @@ class RegisterUser extends RegisterState {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is RegisterUser && other.vmUser == vmUser;
+    return other is RegisterSucceed && other.vmUser == vmUser;
   }
 
   @override
   int get hashCode => vmUser.hashCode;
 
   @override
-  String toString() => 'RegisterUser(vmUser: $vmUser)';
+  String toString() => 'RegisterSucceed(vmUser: $vmUser)';
 }
 
 class RegisterFailed extends RegisterState {

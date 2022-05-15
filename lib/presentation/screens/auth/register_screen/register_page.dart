@@ -2,7 +2,9 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
+import 'package:vending_machine/data/models/new_vm_user.dart';
 import 'package:vending_machine/logic/cubit/register_cubit/register_cubit.dart';
+import 'package:vending_machine/presentation/screens/auth/register_screen/widgets/app_date_picker.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../router/app_router.dart';
@@ -18,10 +20,22 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   TextEditingController nameController = TextEditingController();
-  TextEditingController ageController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  TextEditingController confirmPasswordController = TextEditingController();
+  String dob = "";
+
+  register() {
+    NewVMUser newVMUser = NewVMUser(
+        name: nameController.text,
+        email: emailController.text,
+        logedDevice: "",
+        dob: dob,
+        balance: "",
+        password: passwordController.text);
+
+    BlocProvider.of<RegisterCubit>(context).register(newVMUser: newVMUser);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -100,11 +114,9 @@ class _RegisterPageState extends State<RegisterPage> {
                     SizedBox(
                       height: 1.h,
                     ),
-                    AuthInputText(
-                      controller: ageController,
-                      hintText: "26",
-                      textInputType: TextInputType.number,
-                    ),
+                    AppDatePicker(
+                        onDateSelected: (date) =>
+                            dob = "${date.day} - ${date.month} - ${date.year}"),
                     SizedBox(
                       height: 3.h,
                     ),
@@ -145,25 +157,6 @@ class _RegisterPageState extends State<RegisterPage> {
                     SizedBox(
                       height: 3.h,
                     ),
-                    Text(
-                      "Confirm Password",
-                      style: TextStyle(
-                        color: AppColors.darkElv1,
-                        fontSize: 15.sp,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 1.h,
-                    ),
-                    AuthInputText(
-                      isPassword: true,
-                      controller: confirmPasswordController,
-                      hintText: "* * * * * *",
-                      textInputType: TextInputType.visiblePassword,
-                    ),
-                    SizedBox(
-                      height: 3.h,
-                    ),
                     Center(
                       child: BlocConsumer<RegisterCubit, RegisterState>(
                         listener: (context, state) {
@@ -173,30 +166,21 @@ class _RegisterPageState extends State<RegisterPage> {
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(snackBar);
                           }
-                          if (state is RegisterUser) {
-                            Navigator.pushNamedAndRemoveUntil(
-                              context,
-                              AppRouter.landingPage,
-                              (route) => false,
-                            );
-                          }
-                          if (state is RegisterToMachine) {
-                            Navigator.pushNamedAndRemoveUntil(
-                              context,
-                              AppRouter.homePage,
-                              (route) => false,
-                              arguments: state.deviceId,
-                            );
+                          if (state is RegisterSucceed) {
+                            Navigator.pushNamedAndRemoveUntil(context,
+                                AppRouter.takePicturesPage, (route) => false,
+                                arguments: state.vmUser);
                           }
                         },
                         builder: (context, state) {
+                          if (state is RegisterLoading) {
+                            return const CircularProgressIndicator(
+                              color: AppColors.primaryColor,
+                            );
+                          }
                           return AuthButton(
                             text: "REGISTER",
-                            onPress: () => Navigator.pushNamedAndRemoveUntil(
-                              context,
-                              AppRouter.takePicturesPage,
-                              (route) => false,
-                            ),
+                            onPress: () => register(),
                           );
                         },
                       ),

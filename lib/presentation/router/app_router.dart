@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:vending_machine/logic/cubit/face_id_auth_cubit/face_id_auth_cubit.dart';
+import 'package:vending_machine/presentation/screens/auth/face_id_auth_screen/face_id_auth_page.dart';
 
 import '../../core/exceptions/route_exception.dart';
 import '../../data/models/beverage.dart';
+import '../../data/models/vm_user.dart';
 import '../../logic/cubit/device_id_cubit/device_id_cubit.dart';
 import '../../logic/cubit/landing_cubit/landing_cubit.dart';
 import '../../logic/cubit/login_cubit/login_cubit.dart';
 import '../../logic/cubit/products_cubit/products_cubit.dart';
 import '../../logic/cubit/register_cubit/register_cubit.dart';
+import '../../logic/cubit/register_images_cubit/register_images_cubit.dart';
 import '../../logic/cubit/scanner_cubit/scanner_cubit.dart';
 import '../../logic/cubit/timer_cubit/timer_cubit.dart';
 import '../screens/add_payment_method/add_payments_method.dart';
@@ -25,6 +29,7 @@ class AppRouter {
   static const String homePage = '/homePage';
   static const String loginPage = '/loginPage';
   static const String registerPage = '/registerPage';
+  static const String faceIdAuthPage = '/faceIdAuthPage';
   static const String paymentPage = '/paymentPage';
   static const String addPaymentMethodPage = '/addPaymentMethodPage';
   static const String takePicturesPage = '/takePicturesPage';
@@ -41,7 +46,8 @@ class AppRouter {
           ),
         );
       case homePage:
-        final String deviceId = settings.arguments as String;
+        final Map<String, dynamic> args =
+            settings.arguments as Map<String, dynamic>;
         return MaterialPageRoute(
           builder: (_) => MultiBlocProvider(
             providers: [
@@ -53,7 +59,8 @@ class AppRouter {
               ),
             ],
             child: HomePage(
-              deviceId: deviceId,
+              deviceId: args["deviceId"],
+              vmUser: args["vmUser"],
             ),
           ),
         );
@@ -62,6 +69,13 @@ class AppRouter {
           builder: (_) => BlocProvider(
             create: (context) => LoginCubit(),
             child: const LoginPage(),
+          ),
+        );
+      case faceIdAuthPage:
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (context) => FaceIdAuthCubit(),
+            child: const FaceIdAuthPage(),
           ),
         );
       case registerPage:
@@ -83,8 +97,14 @@ class AppRouter {
           builder: (_) => const AddPaymentMethodPage(),
         );
       case takePicturesPage:
+        VMUser vmUser = settings.arguments as VMUser;
         return MaterialPageRoute(
-          builder: (_) => const TakePicturesPage(),
+          builder: (_) => BlocProvider(
+            create: (context) => RegisterImagesCubit(),
+            child: TakePicturesPage(
+              vmUser: vmUser,
+            ),
+          ),
         );
       case deviceIdPage:
         return MaterialPageRoute(
@@ -94,10 +114,13 @@ class AppRouter {
           ),
         );
       case scannerPage:
+        VMUser vmUser = settings.arguments as VMUser;
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
             create: (context) => ScannerCubit(),
-            child: const ScannerPage(),
+            child: ScannerPage(
+              vmUser: vmUser,
+            ),
           ),
         );
       default:

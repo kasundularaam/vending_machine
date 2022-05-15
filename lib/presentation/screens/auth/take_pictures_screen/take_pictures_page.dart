@@ -2,28 +2,50 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:vending_machine/presentation/router/app_router.dart';
+import 'package:sizer/sizer.dart';
+import 'package:vending_machine/data/models/new_vm_user_images.dart';
+
+import 'package:vending_machine/data/models/vm_user.dart';
+import 'package:vending_machine/logic/cubit/register_images_cubit/register_images_cubit.dart';
 
 import '../../../../core/constants/app_colors.dart';
-import 'package:sizer/sizer.dart';
-
 import '../../../../logic/cubit/pick_image_cubit/pick_image_cubit.dart';
+import '../../../router/app_router.dart';
 import '../widgets/auth_button.dart';
 import 'widgets/show_image_box.dart';
 
 class TakePicturesPage extends StatefulWidget {
-  const TakePicturesPage({Key? key}) : super(key: key);
+  final VMUser vmUser;
+  const TakePicturesPage({
+    Key? key,
+    required this.vmUser,
+  }) : super(key: key);
 
   @override
   _TakePicturesPageState createState() => _TakePicturesPageState();
 }
 
 class _TakePicturesPageState extends State<TakePicturesPage> {
+  VMUser get vmUser => widget.vmUser;
   List<File> imageList = [];
   File? image1;
   File? image2;
   File? image3;
   File? image4;
+
+  registerImages() {
+    if (image1 != null && image2 != null && image3 != null && image4 != null) {
+      BlocProvider.of<RegisterImagesCubit>(context).registerImages(
+          newVMUserImages: NewVMUserImages(
+              user: vmUser.id,
+              image1: image1!,
+              image2: image2!,
+              image3: image3!),
+          vmUser: vmUser,
+          image4: image4!);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -113,17 +135,38 @@ class _TakePicturesPageState extends State<TakePicturesPage> {
                     height: 4.h,
                   ),
                   Center(
-                      child: AuthButton(
-                          onPress: () {
-                            if (image1 != null &&
-                                image2 != null &&
-                                image3 != null &&
-                                image4 != null) {
-                              Navigator.pushNamedAndRemoveUntil(context,
-                                  AppRouter.homePage, (route) => false);
-                            }
-                          },
-                          text: "OK")),
+                      child: BlocConsumer<RegisterImagesCubit,
+                          RegisterImagesState>(
+                    listener: (context, state) {
+                      if (state is RegisterImagesFailed) {
+                        SnackBar snackBar =
+                            SnackBar(content: Text(state.errorMsg));
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      }
+                      if (state is RegisterImagesMachine) {
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, AppRouter.homePage, (route) => false,
+                            arguments: {
+                              "deviceId": state.deviceId,
+                              "vmUser": vmUser
+                            });
+                      }
+                      if (state is RegisterImagesUser) {
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, AppRouter.scannerPage, (route) => false,
+                            arguments: vmUser);
+                      }
+                    },
+                    builder: (context, state) {
+                      if (state is RegisterImagesLoading) {
+                        return const CircularProgressIndicator(
+                          color: AppColors.primaryColor,
+                        );
+                      }
+                      return AuthButton(
+                          onPress: () => registerImages(), text: "OK");
+                    },
+                  )),
                 ],
               ),
             ))

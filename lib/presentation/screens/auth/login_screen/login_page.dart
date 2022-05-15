@@ -147,7 +147,10 @@ class _LoginPageState extends State<LoginPage> {
                               context,
                               AppRouter.homePage,
                               (route) => false,
-                              arguments: state.deviceId,
+                              arguments: {
+                                "deviceId": state.deviceId,
+                                "vmUser": state.vmUser
+                              },
                             );
                           }
                         },
@@ -162,6 +165,27 @@ class _LoginPageState extends State<LoginPage> {
                             onPress: () => login(),
                           );
                         },
+                      ),
+                    ),
+                    SizedBox(
+                      height: 3.h,
+                    ),
+                    Text(
+                      "OR",
+                      style: TextStyle(
+                          color: AppColors.primaryColor,
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w600),
+                    ),
+                    SizedBox(
+                      height: 3.h,
+                    ),
+                    AuthButton(
+                      text: "Scan Face",
+                      onPress: () => Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        AppRouter.homePage,
+                        (route) => false,
                       ),
                     ),
                     SizedBox(

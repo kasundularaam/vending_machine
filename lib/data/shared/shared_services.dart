@@ -5,12 +5,12 @@ class SharedServices {
   static const String userTypeKey = "userTypeKey";
   static const String deviceIdKey = "deviceIdKey";
 
-  static Future loginAsMachine() async {
+  static Future addMachine() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     preferences.setString(userTypeKey, "machine");
   }
 
-  static Future loginAsUser({required int uid}) async {
+  static Future addUser({required int uid}) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     preferences.setString(userTypeKey, "user");
     preferences.setInt(uidKey, uid);
