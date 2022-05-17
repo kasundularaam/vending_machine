@@ -11,8 +11,12 @@ class DeviceIdCubit extends Cubit<DeviceIdState> {
   Future setDeviceId({required String id}) async {
     try {
       emit(DeviceIdLoading());
-      await SharedServices.setDeviceId(id: id);
-      await SharedServices.addMachine();
+      if (id.trim().isNotEmpty) {
+        await SharedServices.setDeviceId(id: id);
+        await SharedServices.addMachine();
+      } else {
+        emit(DeviceIdFailed(errorMsg: "Device id can not be blank."));
+      }
     } catch (e) {
       emit(DeviceIdFailed(errorMsg: e.toString()));
     }

@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:vending_machine/logic/cubit/face_id_auth_cubit/face_id_auth_cubit.dart';
-import 'package:vending_machine/presentation/screens/auth/face_id_auth_screen/face_id_auth_page.dart';
 
 import '../../core/exceptions/route_exception.dart';
-import '../../data/models/beverage.dart';
+import '../../data/models/product.dart';
 import '../../data/models/vm_user.dart';
 import '../../logic/cubit/device_id_cubit/device_id_cubit.dart';
+import '../../logic/cubit/face_id_auth_cubit/face_id_auth_cubit.dart';
 import '../../logic/cubit/landing_cubit/landing_cubit.dart';
 import '../../logic/cubit/login_cubit/login_cubit.dart';
 import '../../logic/cubit/products_cubit/products_cubit.dart';
@@ -14,7 +13,7 @@ import '../../logic/cubit/register_cubit/register_cubit.dart';
 import '../../logic/cubit/register_images_cubit/register_images_cubit.dart';
 import '../../logic/cubit/scanner_cubit/scanner_cubit.dart';
 import '../../logic/cubit/timer_cubit/timer_cubit.dart';
-import '../screens/add_payment_method/add_payments_method.dart';
+import '../screens/auth/face_id_auth_screen/face_id_auth_page.dart';
 import '../screens/auth/login_screen/login_page.dart';
 import '../screens/auth/register_screen/register_page.dart';
 import '../screens/auth/take_pictures_screen/take_pictures_page.dart';
@@ -31,7 +30,6 @@ class AppRouter {
   static const String registerPage = '/registerPage';
   static const String faceIdAuthPage = '/faceIdAuthPage';
   static const String paymentPage = '/paymentPage';
-  static const String addPaymentMethodPage = '/addPaymentMethodPage';
   static const String takePicturesPage = '/takePicturesPage';
   static const String deviceIdPage = '/deviceIdPage';
   static const String scannerPage = '/scannerPage';
@@ -86,15 +84,11 @@ class AppRouter {
           ),
         );
       case paymentPage:
-        Beverage beverage = settings.arguments as Beverage;
+        Product product = settings.arguments as Product;
         return MaterialPageRoute(
           builder: (_) => PaymentPage(
-            beverage: beverage,
+            product: product,
           ),
-        );
-      case addPaymentMethodPage:
-        return MaterialPageRoute(
-          builder: (_) => const AddPaymentMethodPage(),
         );
       case takePicturesPage:
         VMUser vmUser = settings.arguments as VMUser;

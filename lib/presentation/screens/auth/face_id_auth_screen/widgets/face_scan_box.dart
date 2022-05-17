@@ -27,17 +27,30 @@ class FaceScanBox extends StatelessWidget {
             onCapture(state.file);
           }
         },
-        child: Container(
-          padding: EdgeInsets.all(2.w),
-          height: 30.h,
-          decoration: BoxDecoration(
-              color: AppColors.primaryColor,
-              borderRadius: BorderRadius.circular(5.w)),
-          child: Column(
-            children: [
-              Image.asset("assets/selfie.png"),
-            ],
-          ),
+        child: Column(
+          children: [
+            Container(
+              padding: EdgeInsets.all(2.w),
+              width: 100.w,
+              decoration: BoxDecoration(
+                  color: AppColors.primaryColor,
+                  borderRadius: BorderRadius.circular(5.w)),
+              child: Image.asset(
+                "assets/selfie.png",
+                fit: BoxFit.fitWidth,
+              ),
+            ),
+            SizedBox(
+              height: 3.h,
+            ),
+            Text(
+              "Touch here to scan face",
+              style: TextStyle(
+                color: AppColors.darkElv1,
+                fontSize: 14.sp,
+              ),
+            ),
+          ],
         ),
       ),
     );

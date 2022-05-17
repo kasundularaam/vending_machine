@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
@@ -9,6 +10,7 @@ import '../models/new_vm_user.dart';
 import '../models/new_vm_user_images.dart';
 import '../models/vm_user.dart';
 import '../models/vm_user_images.dart';
+// import 'package:path/path.dart' as path;
 
 class UserServices {
   static Future<VMUser> getVMUser({required int uid}) async {
@@ -122,8 +124,15 @@ class UserServices {
     }
   }
 
-  static Future<AuthenticateRes> authenticate({required File image}) async {
+  static Future<AuthenticateRes> authenticate(
+      {required File image, required String deviceId}) async {
     try {
+//       log('Original path: ${image.path}');
+//       String dir = path.dirname(image.path);
+//       String newPath = path.join(dir, 'case01wd03id01.jpg');
+// print('NewPath: $newPath');
+//       image.renameSync(newPath);
+//       log(image.path);
       final req = http.MultipartRequest(
         "POST",
         Uri.parse(
@@ -132,15 +141,17 @@ class UserServices {
       )
         ..fields['device'] = "123"
         ..files.add(await http.MultipartFile.fromPath("image", image.path,
-            contentType: MediaType('image', 'png')));
+            contentType: MediaType('image', 'jpg')));
 
       final res = await req.send();
 
       final resStr = await res.stream.bytesToString();
+      log(resStr);
 
       if (res.statusCode == 200) return AuthenticateRes.fromJson(resStr);
       throw "An error occurred";
     } catch (e) {
+      log(e.toString());
       throw e.toString();
     }
   }

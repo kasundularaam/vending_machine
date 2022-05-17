@@ -2,17 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
 
-import 'package:vending_machine/data/models/product.dart';
-import 'package:vending_machine/data/models/product_category.dart';
-import 'package:vending_machine/data/models/vm_user.dart';
-import 'package:vending_machine/logic/cubit/products_cubit/products_cubit.dart';
-
 import '../../../core/constants/app_colors.dart';
+import '../../../data/models/product.dart';
+import '../../../data/models/product_category.dart';
+import '../../../data/models/vm_user.dart';
+import '../../../logic/cubit/products_cubit/products_cubit.dart';
 import '../../../logic/cubit/timer_cubit/timer_cubit.dart';
 import '../../router/app_router.dart';
 import 'widgets/home_card.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   final String deviceId;
   final VMUser vmUser;
   const HomePage({
@@ -20,6 +19,17 @@ class HomePage extends StatelessWidget {
     required this.deviceId,
     required this.vmUser,
   }) : super(key: key);
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    BlocProvider.of<TimerCubit>(context).activate(seconds: 90);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

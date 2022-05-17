@@ -16,20 +16,25 @@ class FaceIdAuthCubit extends Cubit<FaceIdAuthState> {
   Future authenticateUser({required File image}) async {
     try {
       emit(FaceIdAuthLoading());
+      final String userType = await SharedServices.getUserType();
+
+      String deviceId = "123";
+
+      if (userType != "user") {
+        deviceId = await SharedServices.getDeviceId();
+      }
       final AuthenticateRes authenticateRes =
-          await UserServices.authenticate(image: image);
+          await UserServices.authenticate(image: image, deviceId: deviceId);
 
       if (authenticateRes.id != "Unknown") {
         int authId = int.parse(authenticateRes.id.split("_")[0]);
 
         final VMUser vmUser = await UserServices.getVMUser(uid: authId);
 
-        final String userType = await SharedServices.getUserType();
         if (userType == "user") {
           await SharedServices.addUser(uid: vmUser.id);
           emit(FaceIdAuthForUser(vmUser: vmUser));
         } else {
-          final String deviceId = await SharedServices.getDeviceId();
           emit(FaceIdAuthForMachine(vmUser: vmUser, deviceId: deviceId));
         }
       } else {

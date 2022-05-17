@@ -2,9 +2,10 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
-import 'package:vending_machine/logic/cubit/register_images_cubit/register_images_cubit.dart';
 import '../../../../core/constants/app_colors.dart';
+import '../../../../core/constants/strings.dart';
 import '../../../../logic/cubit/login_cubit/login_cubit.dart';
+import '../../../../logic/cubit/register_images_cubit/register_images_cubit.dart';
 import '../../../router/app_router.dart';
 import '../widgets/auth_button.dart';
 import '../widgets/auth_input_text.dart';
@@ -31,7 +32,7 @@ class _LoginPageState extends State<LoginPage> {
           Align(
             alignment: Alignment.topCenter,
             child: Image.asset(
-              "assets/logo_with_shape.png",
+              Strings.logoWIthShapeImg,
               width: 100.w,
               fit: BoxFit.fitWidth,
             ),
@@ -109,16 +110,6 @@ class _LoginPageState extends State<LoginPage> {
                     SizedBox(
                       height: 3.h,
                     ),
-                    Text(
-                      "Forgot password",
-                      style: TextStyle(
-                          color: AppColors.primaryColor,
-                          fontSize: 12.sp,
-                          fontWeight: FontWeight.w600),
-                    ),
-                    SizedBox(
-                      height: 3.h,
-                    ),
                     Center(
                       child: BlocConsumer<LoginCubit, LoginState>(
                         listener: (context, state) {
@@ -170,22 +161,39 @@ class _LoginPageState extends State<LoginPage> {
                     SizedBox(
                       height: 3.h,
                     ),
-                    Text(
-                      "OR",
-                      style: TextStyle(
-                          color: AppColors.primaryColor,
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w600),
+                    Row(
+                      children: [
+                        const Expanded(
+                            child: Divider(
+                          color: AppColors.darkElv1,
+                        )),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 3.w),
+                          child: Text(
+                            "OR",
+                            style: TextStyle(
+                                color: AppColors.primaryColor,
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                        const Expanded(
+                            child: Divider(
+                          color: AppColors.darkElv1,
+                        )),
+                      ],
                     ),
                     SizedBox(
                       height: 3.h,
                     ),
-                    AuthButton(
-                      text: "Scan Face",
-                      onPress: () => Navigator.pushNamedAndRemoveUntil(
-                        context,
-                        AppRouter.homePage,
-                        (route) => false,
+                    Center(
+                      child: AuthButton(
+                        text: "Scan Face",
+                        onPress: () => Navigator.pushNamedAndRemoveUntil(
+                          context,
+                          AppRouter.faceIdAuthPage,
+                          (route) => false,
+                        ),
                       ),
                     ),
                     SizedBox(
