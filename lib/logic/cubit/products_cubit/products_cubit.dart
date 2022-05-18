@@ -16,7 +16,8 @@ class ProductsCubit extends Cubit<ProductsState> {
       emit(ProductsLoading());
       final List<ProductCategory> categories =
           await CategoryServices.getAllCategories();
-      final List<Product> products = await ProductServices.getAllProducts();
+      final List<Product> products =
+          await ProductServices.getProductsByDeviceId(deviceId: "20");
       emit(ProductsLoaded(categories: categories, products: products));
     } catch (e) {
       emit(ProductsFailed(errorMsg: e.toString()));

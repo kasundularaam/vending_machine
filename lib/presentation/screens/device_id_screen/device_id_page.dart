@@ -103,6 +103,10 @@ class _DeviceIdPageState extends State<DeviceIdPage> {
                                 .showSnackBar(snackBar);
                           }
                           if (state is DeviceIdSucceed) {
+                            SnackBar snackBar = const SnackBar(
+                                content: Text("Settings successful"));
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
                             Navigator.pushNamedAndRemoveUntil(context,
                                 AppRouter.landingPage, (route) => false);
                           }

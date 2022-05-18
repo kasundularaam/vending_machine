@@ -14,6 +14,7 @@ class DeviceIdCubit extends Cubit<DeviceIdState> {
       if (id.trim().isNotEmpty) {
         await SharedServices.setDeviceId(id: id);
         await SharedServices.addMachine();
+        emit(DeviceIdSucceed());
       } else {
         emit(DeviceIdFailed(errorMsg: "Device id can not be blank."));
       }

@@ -26,6 +26,8 @@ class DataProvider {
 
   static String get products => "$baseUrl/products/product/";
   static String productsById(int id) => "$baseUrl/products/product/$id";
+  static String productsByDeviceId(String id) =>
+      "$baseUrl/products/product?device=$id";
 
   //USER
 
