@@ -5,7 +5,7 @@ import 'package:sizer/sizer.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../data/models/product.dart';
 import '../../../logic/cubit/timer_cubit/timer_cubit.dart';
-import '../../globlal_widgets/check_out_button.dart';
+import '../../global_widgets/check_out_button.dart';
 import '../../router/app_router.dart';
 import 'widgets/payment_method_card.dart';
 
@@ -58,71 +58,63 @@ class _PaymentPageState extends State<PaymentPage> {
                 ),
               ),
               Container(
-                margin: EdgeInsets.all(5.w),
-                padding: EdgeInsets.all(5.w),
+                margin: EdgeInsets.symmetric(horizontal: 4.w, vertical: 1.h),
+                padding: EdgeInsets.all(2.w),
                 decoration: BoxDecoration(
                   color: AppColors.lightElv0,
                   borderRadius: BorderRadius.circular(3.w),
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                child: Row(
                   children: [
-                    Text(
-                      "You Ordered",
-                      style: TextStyle(
-                        color: AppColors.primaryColor,
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.w800,
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "You Ordered",
+                            style: TextStyle(
+                              color: AppColors.darkElv0,
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 1.h,
+                          ),
+                          Wrap(children: [
+                            Text(
+                              product.title,
+                              maxLines: 3,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                color: AppColors.darkElv0,
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ]),
+                          SizedBox(
+                            height: 1.h,
+                          ),
+                          Text(
+                            "${product.price}\$",
+                            style: TextStyle(
+                              color: AppColors.primaryColor,
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    SizedBox(
-                      height: 3.h,
-                    ),
-                    Row(
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(3.w),
-                          child: Image.asset(
-                            "assets/images/${product.category.toString()}",
-                            width: 30.w,
-                            height: 30.w,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 5.w,
-                        ),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Wrap(children: [
-                                Text(
-                                  product.title,
-                                  maxLines: 3,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                    color: AppColors.darkElv0,
-                                    fontSize: 18.sp,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ]),
-                              SizedBox(
-                                height: 2.h,
-                              ),
-                              Text(
-                                "${product.price}\$",
-                                style: TextStyle(
-                                  color: AppColors.primaryColor,
-                                  fontSize: 22.sp,
-                                  fontWeight: FontWeight.w900,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(3.w),
+                      child: Image.asset(
+                        "assets/${product.category.toString()}.png",
+                        width: 25.w,
+                        height: 25.w,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ],
                 ),
@@ -163,8 +155,11 @@ class _PaymentPageState extends State<PaymentPage> {
                         number: "***345",
                         selected: false,
                       ),
-                      SizedBox(height: 5.h),
-                      CheckOutButton(onPress: () {}, text: "Pay Now")
+                      const Spacer(),
+                      CheckOutButton(onPress: () {}, text: "Pay Now"),
+                      SizedBox(
+                        height: 2.h,
+                      ),
                     ],
                   ),
                 ),

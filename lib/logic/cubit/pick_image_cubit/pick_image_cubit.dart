@@ -9,9 +9,9 @@ part 'pick_image_state.dart';
 class PickImageCubit extends Cubit<PickImageState> {
   PickImageCubit() : super(PickImageInitial());
 
-  Future<void> pickImage() async {
+  Future<void> pickImage({required String fileName}) async {
     try {
-      File file = await TakeImages.takeImage();
+      File file = await TakeImages.takeImage(fileName: fileName);
       emit(PickImagePicked(file: file));
     } catch (e) {
       emit(PickImageFailed(errorMsg: e.toString()));

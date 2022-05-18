@@ -91,6 +91,7 @@ class _TakePicturesPageState extends State<TakePicturesPage> {
                             create: (context) => PickImageCubit(),
                             child: ShowImageBox(
                               number: 1,
+                              fileName: "${vmUser.id}_1",
                               onCapture: (selfie1) => image1 = selfie1,
                             ),
                           ),
@@ -100,6 +101,7 @@ class _TakePicturesPageState extends State<TakePicturesPage> {
                             child: ShowImageBox(
                               onCapture: (selfie2) => image2 = selfie2,
                               number: 2,
+                              fileName: "${vmUser.id}_2",
                             ),
                           )
                         ],
@@ -117,6 +119,7 @@ class _TakePicturesPageState extends State<TakePicturesPage> {
                             child: ShowImageBox(
                               onCapture: (selfie3) => image3 = selfie3,
                               number: 3,
+                              fileName: "${vmUser.id}_3",
                             ),
                           ),
                           SizedBox(width: 3.w),
@@ -125,6 +128,7 @@ class _TakePicturesPageState extends State<TakePicturesPage> {
                             child: ShowImageBox(
                               onCapture: (selfie4) => image4 = selfie4,
                               number: 4,
+                              fileName: "${vmUser.id}_4",
                             ),
                           )
                         ],

@@ -50,10 +50,9 @@ class UserServices {
           Uri.parse(
             DataProvider.user,
           ),
-          headers: <String, String>{
-            "Content-Type": "application/json; charset=UTF-8",
-          },
+          headers: {HttpHeaders.contentTypeHeader: 'application/json'},
           body: newVMUser.toJson());
+
       if (res.statusCode == 201) return VMUser.fromJson(res.body);
       throw "Failed to load data";
     } catch (e) {

@@ -28,9 +28,9 @@ class _RegisterPageState extends State<RegisterPage> {
     NewVMUser newVMUser = NewVMUser(
         name: nameController.text,
         email: emailController.text,
-        logedDevice: "",
+        logedDevice: "0",
         dob: dob,
-        balance: "",
+        balance: "0",
         password: passwordController.text);
 
     BlocProvider.of<RegisterCubit>(context).register(newVMUser: newVMUser);
@@ -116,7 +116,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                     AppDatePicker(
                         onDateSelected: (date) =>
-                            dob = "${date.day} - ${date.month} - ${date.year}"),
+                            dob = "${date.year}-${date.month}-${date.day}"),
                     SizedBox(
                       height: 3.h,
                     ),

@@ -7,6 +7,7 @@ import '../../../../core/constants/app_colors.dart';
 import '../../../../data/models/vm_user.dart';
 import '../../../../logic/cubit/face_id_auth_cubit/face_id_auth_cubit.dart';
 import '../../../router/app_router.dart';
+import '../widgets/auth_button.dart';
 import 'widgets/face_scan_box.dart';
 
 class FaceIdAuthPage extends StatefulWidget {
@@ -145,6 +146,44 @@ class _FaceIdAuthPageState extends State<FaceIdAuthPage> {
                       },
                     )
                   ],
+                ),
+              ),
+              SizedBox(
+                height: 3.h,
+              ),
+              Row(
+                children: [
+                  const Expanded(
+                      child: Divider(
+                    color: AppColors.darkElv1,
+                  )),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 3.w),
+                    child: Text(
+                      "OR",
+                      style: TextStyle(
+                          color: AppColors.primaryColor,
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w600),
+                    ),
+                  ),
+                  const Expanded(
+                      child: Divider(
+                    color: AppColors.darkElv1,
+                  )),
+                ],
+              ),
+              SizedBox(
+                height: 3.h,
+              ),
+              Center(
+                child: AuthButton(
+                  text: "Log in with email",
+                  onPress: () => Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    AppRouter.loginPage,
+                    (route) => false,
+                  ),
                 ),
               ),
               SizedBox(

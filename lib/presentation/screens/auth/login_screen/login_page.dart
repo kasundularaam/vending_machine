@@ -5,7 +5,6 @@ import 'package:sizer/sizer.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/strings.dart';
 import '../../../../logic/cubit/login_cubit/login_cubit.dart';
-import '../../../../logic/cubit/register_images_cubit/register_images_cubit.dart';
 import '../../../router/app_router.dart';
 import '../widgets/auth_button.dart';
 import '../widgets/auth_input_text.dart';
@@ -21,7 +20,10 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  login() {}
+  login() {
+    BlocProvider.of<LoginCubit>(context)
+        .login(email: emailController.text, password: passwordController.text);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -146,7 +148,7 @@ class _LoginPageState extends State<LoginPage> {
                           }
                         },
                         builder: (context, state) {
-                          if (state is RegisterImagesLoading) {
+                          if (state is LoginLoading) {
                             return const CircularProgressIndicator(
                               color: AppColors.primaryColor,
                             );

@@ -23,13 +23,13 @@ class SharedServices {
 
   static Future<String> getUserType() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    String userType = preferences.getString(deviceIdKey) ?? "";
+    String userType = preferences.getString(userTypeKey) ?? "user";
     return userType;
   }
 
   static Future<String> getDeviceId() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    String deviceId = preferences.getString(userTypeKey) ?? "user";
+    String deviceId = preferences.getString(deviceIdKey) ?? "";
     return deviceId;
   }
 

@@ -25,8 +25,11 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  String get deviceId => widget.deviceId;
+  VMUser get vmUser => widget.vmUser;
   @override
   void initState() {
+    BlocProvider.of<ProductsCubit>(context).load(deviceId: deviceId);
     BlocProvider.of<TimerCubit>(context).activate(seconds: 90);
     super.initState();
   }
@@ -45,94 +48,230 @@ class _HomePageState extends State<HomePage> {
       child: Scaffold(
         backgroundColor: AppColors.primaryColor,
         body: SafeArea(
-          child: ListView(
-            physics: const BouncingScrollPhysics(),
-            children: [
-              Container(
-                color: AppColors.primaryColor,
-                padding: EdgeInsets.symmetric(vertical: 1.2.h, horizontal: 5.w),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    ClipOval(
-                      child: Image.asset(
-                        "assets/profile.png",
-                        width: 10.w,
-                        height: 10.w,
-                      ),
+          child: Container(
+            color: AppColors.lightElv1,
+            child: Column(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    color: AppColors.primaryColor,
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(5.w),
+                      bottomRight: Radius.circular(5.w),
                     ),
-                    Container(
-                      padding: EdgeInsets.all(1.5.w),
-                      decoration: BoxDecoration(
-                          color: AppColors.lightElv0.withOpacity(0.3),
-                          shape: BoxShape.circle),
-                      child: Icon(
-                        Icons.search_rounded,
-                        color: AppColors.lightElv0,
-                        size: 22.sp,
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              Expanded(
-                child: Container(
-                  color: AppColors.lightElv1,
-                  child: ListView(
-                    physics: const BouncingScrollPhysics(),
-                    shrinkWrap: true,
+                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 5.w),
+                  child: Column(
                     children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          color: AppColors.primaryColor,
-                          borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(5.w),
-                            bottomRight: Radius.circular(5.w),
-                          ),
-                        ),
-                        padding: EdgeInsets.symmetric(horizontal: 5.w),
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Expanded(
+                      SizedBox(
+                        height: 2.h,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          InkWell(
+                            onTap: () => showModalBottomSheet(
+                              isScrollControlled: true,
+                              context: context,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.vertical(
+                                  top: Radius.circular(5.w),
+                                ),
+                              ),
+                              backgroundColor: Colors.white,
+                              builder: (sheetContext) {
+                                return Padding(
+                                  padding: EdgeInsets.all(5.w),
                                   child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    mainAxisSize: MainAxisSize.min,
                                     children: [
-                                      Text(
-                                        "Lorem Ipsum!",
-                                        style: TextStyle(
-                                            color: AppColors.lightElv0,
-                                            fontSize: 18.sp,
-                                            fontWeight: FontWeight.w600),
-                                      ),
-                                      SizedBox(
-                                        height: 1.h,
-                                      ),
-                                      Wrap(children: [
-                                        Text(
-                                          "Lorem ipsum dolor sit amet, consectetur adipiscing elit,",
-                                          style: TextStyle(
-                                            color: AppColors.lightElv0,
-                                            fontSize: 12.sp,
-                                          ),
+                                      ClipOval(
+                                        child: Image.asset(
+                                          "assets/profile.png",
+                                          width: 30.w,
+                                          height: 30.w,
                                         ),
-                                      ])
+                                      ),
+                                      SizedBox(height: 2.h),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            "Name:",
+                                            style: TextStyle(
+                                                color: AppColors.darkElv0,
+                                                fontSize: 16.sp,
+                                                fontWeight: FontWeight.w400),
+                                          ),
+                                          SizedBox(
+                                            width: 2.w,
+                                          ),
+                                          Expanded(
+                                            child: Text(
+                                              vmUser.name,
+                                              textAlign: TextAlign.end,
+                                              style: TextStyle(
+                                                  color: AppColors.darkElv1,
+                                                  fontSize: 16.sp,
+                                                  fontWeight: FontWeight.w400),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(height: 2.h),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            "Email:",
+                                            style: TextStyle(
+                                                color: AppColors.darkElv0,
+                                                fontSize: 16.sp,
+                                                fontWeight: FontWeight.w400),
+                                          ),
+                                          SizedBox(
+                                            width: 2.w,
+                                          ),
+                                          Expanded(
+                                            child: Text(
+                                              vmUser.email,
+                                              textAlign: TextAlign.end,
+                                              style: TextStyle(
+                                                  color: AppColors.darkElv1,
+                                                  fontSize: 16.sp,
+                                                  fontWeight: FontWeight.w400),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(height: 2.h),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            "Age:",
+                                            style: TextStyle(
+                                                color: AppColors.darkElv0,
+                                                fontSize: 16.sp,
+                                                fontWeight: FontWeight.w400),
+                                          ),
+                                          SizedBox(
+                                            width: 2.w,
+                                          ),
+                                          Expanded(
+                                            child: Text(
+                                              vmUser.dob,
+                                              textAlign: TextAlign.end,
+                                              style: TextStyle(
+                                                  color: AppColors.darkElv1,
+                                                  fontSize: 16.sp,
+                                                  fontWeight: FontWeight.w400),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(height: 2.h),
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            child: Text(
+                                              "remove account from this device:",
+                                              style: TextStyle(
+                                                  color: AppColors.darkElv1,
+                                                  fontSize: 14.sp,
+                                                  fontWeight: FontWeight.w400),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 2.w,
+                                          ),
+                                          ElevatedButton(
+                                            onPressed: () => {},
+                                            child: const Text(
+                                              "SIGN OUT",
+                                              style: TextStyle(
+                                                  color: AppColors.lightElv0),
+                                            ),
+                                          ),
+                                        ],
+                                      )
                                     ],
                                   ),
+                                );
+                              },
+                            ),
+                            child: ClipOval(
+                              child: Image.asset(
+                                "assets/profile.png",
+                                width: 10.w,
+                                height: 10.w,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.all(1.5.w),
+                            decoration: BoxDecoration(
+                                color: AppColors.lightElv0.withOpacity(0.3),
+                                shape: BoxShape.circle),
+                            child: Icon(
+                              Icons.search_rounded,
+                              color: AppColors.lightElv0,
+                              size: 22.sp,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 2.h,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Vending machine",
+                                  style: TextStyle(
+                                      color: AppColors.lightElv0,
+                                      fontSize: 18.sp,
+                                      fontWeight: FontWeight.w600),
                                 ),
-                                Image.asset(
-                                  "assets/logo_light.png",
-                                )
+                                SizedBox(
+                                  height: 1.h,
+                                ),
+                                Wrap(children: [
+                                  Text(
+                                    "Hi... Welcome to smart vending machine service!\npick your favorite drink and enjoy :)",
+                                    style: TextStyle(
+                                      color: AppColors.lightElv0,
+                                      fontSize: 12.sp,
+                                    ),
+                                  ),
+                                ])
                               ],
                             ),
-                            SizedBox(
-                              height: 1.h,
-                            )
-                          ],
-                        ),
+                          ),
+                          SizedBox(
+                            width: 22.w,
+                            child: Image.asset(
+                              "assets/logo_light.png",
+                              fit: BoxFit.fitWidth,
+                            ),
+                          )
+                        ],
+                      ),
+                      SizedBox(
+                        height: 2.h,
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: ListView(
+                    padding: EdgeInsets.symmetric(horizontal: 3.w),
+                    physics: const BouncingScrollPhysics(),
+                    children: [
+                      SizedBox(
+                        height: 2.h,
                       ),
                       BlocConsumer<ProductsCubit, ProductsState>(
                         listener: (context, state) {
@@ -151,27 +290,25 @@ class _HomePageState extends State<HomePage> {
                             );
                           }
                           if (state is ProductsLoaded) {
-                            return Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 5.w),
-                              child: ListView.builder(
-                                  itemBuilder: (context, index) {
-                                final ProductCategory category =
-                                    state.categories[index];
-                                final List<Product> products = [];
-                                for (var product in state.products) {
-                                  if (product.category == category.id) {
-                                    products.add(product);
+                            return ListView.builder(
+                                physics: const BouncingScrollPhysics(),
+                                shrinkWrap: true,
+                                itemCount: state.categories.length,
+                                itemBuilder: (context, index) {
+                                  final ProductCategory category =
+                                      state.categories[index];
+                                  final List<Product> products = [];
+                                  for (var product in state.products) {
+                                    if (product.category == category.id) {
+                                      products.add(product);
+                                    }
                                   }
-                                }
-                                return Column(
+                                  return Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      SizedBox(
-                                        height: 2.h,
-                                      ),
                                       Text(
-                                        state.categories[index].title,
+                                        category.title,
                                         style: TextStyle(
                                           color: AppColors.darkElv0,
                                           fontSize: 14.sp,
@@ -189,18 +326,27 @@ class _HomePageState extends State<HomePage> {
                                               const BouncingScrollPhysics(),
                                           scrollDirection: Axis.horizontal,
                                           itemCount: products.length,
+                                          shrinkWrap: true,
                                           itemBuilder: (context, index) {
                                             return HomeCard(
-                                                product: products[index]);
+                                              product: products[index],
+                                              categoryTitle: category.title,
+                                            );
                                           },
                                         ),
                                       ),
                                       SizedBox(
-                                        height: 2.h,
+                                        height: 1.h,
                                       ),
-                                    ]);
-                              }),
-                            );
+                                      const Divider(
+                                        color: AppColors.darkElv1,
+                                      ),
+                                      SizedBox(
+                                        height: 1.h,
+                                      ),
+                                    ],
+                                  );
+                                });
                           }
                           return const SizedBox();
                         },
@@ -208,8 +354,8 @@ class _HomePageState extends State<HomePage> {
                     ],
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

@@ -14,7 +14,6 @@ class LoginCubit extends Cubit<LoginState> {
   Future login({required String email, required String password}) async {
     try {
       emit(LoginLoading());
-
       if (email == Strings.adminEmail && password == Strings.password) {
         emit(LoginAdmin());
       } else {

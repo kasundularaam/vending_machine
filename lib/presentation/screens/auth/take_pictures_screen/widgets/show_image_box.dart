@@ -9,10 +9,12 @@ import '../../../../../logic/cubit/pick_image_cubit/pick_image_cubit.dart';
 
 class ShowImageBox extends StatelessWidget {
   final int number;
+  final String fileName;
   final Function(File) onCapture;
   const ShowImageBox({
     Key? key,
     required this.number,
+    required this.fileName,
     required this.onCapture,
   }) : super(key: key);
 
@@ -21,7 +23,8 @@ class ShowImageBox extends StatelessWidget {
     return Flexible(
       flex: 1,
       child: GestureDetector(
-        onTap: () => BlocProvider.of<PickImageCubit>(context).pickImage(),
+        onTap: () => BlocProvider.of<PickImageCubit>(context)
+            .pickImage(fileName: fileName),
         child: BlocConsumer<PickImageCubit, PickImageState>(
           listener: (context, state) {
             if (state is PickImageFailed) {

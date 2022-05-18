@@ -29,7 +29,7 @@ class _AppDatePickerState extends State<AppDatePicker> {
       ).then((date) {
         if (date != null) {
           setState(() {
-            dobText = "${date.day} - ${date.month} - ${date.year}";
+            dobText = "${date.year}-${date.month}-${date.day}";
           });
           widget.onDateSelected(date);
         } else {

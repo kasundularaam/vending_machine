@@ -86,8 +86,11 @@ class AppRouter {
       case paymentPage:
         Product product = settings.arguments as Product;
         return MaterialPageRoute(
-          builder: (_) => PaymentPage(
-            product: product,
+          builder: (_) => BlocProvider(
+            create: (context) => TimerCubit(),
+            child: PaymentPage(
+              product: product,
+            ),
           ),
         );
       case takePicturesPage:

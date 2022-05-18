@@ -17,7 +17,8 @@ class FaceScanBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => BlocProvider.of<PickImageCubit>(context).pickImage(),
+      onTap: () =>
+          BlocProvider.of<PickImageCubit>(context).pickImage(fileName: "image"),
       child: BlocListener<PickImageCubit, PickImageState>(
         listener: (context, state) {
           if (state is PickImageFailed) {
@@ -27,30 +28,30 @@ class FaceScanBox extends StatelessWidget {
             onCapture(state.file);
           }
         },
-        child: Column(
-          children: [
-            Container(
-              padding: EdgeInsets.all(2.w),
-              width: 100.w,
-              decoration: BoxDecoration(
-                  color: AppColors.primaryColor,
-                  borderRadius: BorderRadius.circular(5.w)),
-              child: Image.asset(
+        child: Container(
+          padding: EdgeInsets.all(2.w),
+          width: 100.w,
+          decoration: BoxDecoration(
+              color: AppColors.primaryColor,
+              borderRadius: BorderRadius.circular(5.w)),
+          child: Column(
+            children: [
+              Image.asset(
                 "assets/selfie.png",
                 fit: BoxFit.fitWidth,
               ),
-            ),
-            SizedBox(
-              height: 3.h,
-            ),
-            Text(
-              "Touch here to scan face",
-              style: TextStyle(
-                color: AppColors.darkElv1,
-                fontSize: 14.sp,
+              SizedBox(
+                height: 1.h,
               ),
-            ),
-          ],
+              Text(
+                "Touch here to scan face",
+                style: TextStyle(
+                  color: AppColors.lightElv0,
+                  fontSize: 14.sp,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
