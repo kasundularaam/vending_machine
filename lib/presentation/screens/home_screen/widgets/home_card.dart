@@ -3,14 +3,16 @@ import 'package:sizer/sizer.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../data/models/product.dart';
-import '../../../globlal_widgets/check_out_button.dart';
+import '../../../global_widgets/check_out_button.dart';
 import '../../../router/app_router.dart';
 
 class HomeCard extends StatelessWidget {
   final Product product;
+  final String categoryTitle;
   const HomeCard({
     Key? key,
     required this.product,
+    required this.categoryTitle,
   }) : super(key: key);
 
   @override
@@ -49,9 +51,9 @@ class HomeCard extends StatelessWidget {
                             ClipRRect(
                               borderRadius: BorderRadius.circular(3.w),
                               child: Image.asset(
-                                "assets/images/${product.category.toString()}",
-                                width: 30.w,
-                                height: 30.w,
+                                "assets/${product.category.toString()}.png",
+                                width: 45.w,
+                                height: 45.w,
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -84,25 +86,24 @@ class HomeCard extends StatelessWidget {
                                       fontWeight: FontWeight.w900,
                                     ),
                                   ),
+                                  SizedBox(
+                                    height: 2.h,
+                                  ),
+                                  Text(
+                                    categoryTitle,
+                                    style: TextStyle(
+                                      color: AppColors.darkElv1,
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
                           ],
                         ),
                         SizedBox(
-                          height: 2.h,
-                        ),
-                        Wrap(children: [
-                          Text(
-                            product.lockerId,
-                            style: TextStyle(
-                              color: AppColors.darkElv1,
-                              fontSize: 14.sp,
-                            ),
-                          ),
-                        ]),
-                        SizedBox(
-                          height: 10.h,
+                          height: 5.h,
                         ),
                         CheckOutButton(
                           onPress: () {
@@ -117,80 +118,86 @@ class HomeCard extends StatelessWidget {
                   );
                 },
               )),
-          child: Container(
-            padding: EdgeInsets.all(2.w),
-            width: 45.w,
-            height: 28.h,
-            decoration: BoxDecoration(
-              color: AppColors.lightElv0,
-              borderRadius: BorderRadius.circular(3.w),
-              boxShadow: [
-                BoxShadow(
-                    offset: Offset(0.5.w, 0.5.w),
-                    color: AppColors.darkElv0.withOpacity(0.1),
-                    spreadRadius: 0.1.w,
-                    blurRadius: 0.1.w),
-              ],
-            ),
-            child: Column(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(3.w),
-                  child: Image.asset(
-                    "assets/images/${product.category.toString()}",
-                    height: 12.h,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                SizedBox(
-                  height: 1.h,
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Wrap(children: [
-                        Text(
-                          product.title,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            color: AppColors.darkElv0,
-                            fontSize: 13.sp,
-                            fontWeight: FontWeight.w600,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(3.w),
+            child: Container(
+              width: 45.w,
+              height: 28.h,
+              decoration: BoxDecoration(
+                color: AppColors.lightElv0,
+                boxShadow: [
+                  BoxShadow(
+                      offset: Offset(0.5.w, 0.5.w),
+                      color: AppColors.darkElv0.withOpacity(0.1),
+                      spreadRadius: 0.1.w,
+                      blurRadius: 0.1.w),
+                ],
+              ),
+              child: Column(
+                children: [
+                  Stack(
+                    children: [
+                      Image.asset(
+                        "assets/${product.category.toString()}.png",
+                        fit: BoxFit.cover,
+                      ),
+                      Positioned(
+                        top: 2.w,
+                        right: 1.w,
+                        child: Container(
+                          padding: EdgeInsets.all(2.w),
+                          decoration: const BoxDecoration(
+                            color: AppColors.lightElv0,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Text(
+                            product.lockerId,
+                            style: TextStyle(
+                              color: AppColors.darkElv0,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 10.sp,
+                            ),
                           ),
                         ),
-                      ]),
-                    ),
-                    SizedBox(
-                      width: 2.w,
-                    ),
-                    Text(
-                      "${product.price}\$",
-                      style: TextStyle(
-                        color: AppColors.primaryColor,
-                        fontSize: 15.sp,
-                        fontWeight: FontWeight.w600,
+                      )
+                    ],
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 2.w),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: Text(
+                              product.title,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                color: AppColors.darkElv0,
+                                fontSize: 13.sp,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 2.w,
+                          ),
+                          Text(
+                            "${product.price}\$",
+                            style: TextStyle(
+                              color: AppColors.primaryColor,
+                              fontSize: 15.sp,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
-                ),
-                SizedBox(
-                  height: 1.h,
-                ),
-                Wrap(children: [
-                  Text(
-                    product.lockerId,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: AppColors.darkElv0,
-                      fontSize: 10.sp,
-                    ),
                   ),
-                ]),
-              ],
+                ],
+              ),
             ),
           ),
         ),
