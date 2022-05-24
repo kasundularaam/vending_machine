@@ -135,12 +135,12 @@ class UserServices {
       final req = http.MultipartRequest(
         "POST",
         Uri.parse(
-          DataProvider.registerImages,
+          DataProvider.authenticate,
         ),
-      )
-        ..fields['device'] = "123"
-        ..files.add(await http.MultipartFile.fromPath("image", image.path,
-            contentType: MediaType('image', 'jpg')));
+      );
+      req.fields['device'] = "123";
+      req.files.add(await http.MultipartFile.fromPath("image", image.path,
+          contentType: MediaType('image', 'jpg')));
 
       final res = await req.send();
 

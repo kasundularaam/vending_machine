@@ -10,10 +10,10 @@ class TakeImages {
           preferredCameraDevice: CameraDevice.front);
       if (xImage != null) {
         File image = File(xImage.path);
-        var path = image.path;
-        var lastSeparator = path.lastIndexOf(Platform.pathSeparator);
-        var newPath = path.substring(0, lastSeparator + 1) + fileName;
-        await image.rename(newPath);
+        // var path = image.path;
+        // var lastSeparator = path.lastIndexOf(Platform.pathSeparator);
+        // var newPath = path.substring(0, lastSeparator + 1) + fileName;
+        // await image.rename(newPath);
         return image;
       } else {
         throw "No image captured";

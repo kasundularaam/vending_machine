@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
@@ -17,8 +15,7 @@ class ScannerCubit extends Cubit<ScannerState> {
       emit(ScannerScanning());
       String deviceId = await FlutterBarcodeScanner.scanBarcode(
           '#ff6666', 'Cancel', true, ScanMode.QR);
-      log(deviceId);
-      final bool deviceOk = await ProductServices.deviceOk(deviceId: "20");
+      final bool deviceOk = await ProductServices.deviceOk(deviceId: deviceId);
       if (deviceOk) {
         emit(ScannerSucceed(deviceId: deviceId));
       }
