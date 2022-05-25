@@ -128,7 +128,7 @@ class _TakePicturesPageState extends State<TakePicturesPage> {
                             child: ShowImageBox(
                               onCapture: (selfie4) => image4 = selfie4,
                               number: 4,
-                              fileName: "${vmUser.id}_4",
+                              fileName: "image",
                             ),
                           )
                         ],

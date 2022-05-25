@@ -94,15 +94,37 @@ class UserServices {
   static Future<VMUserImages> addVMUserImages(
       {required NewVMUserImages newVMUserImages}) async {
     try {
-      final res = await http.post(
-          Uri.parse(
-            DataProvider.registerImages,
-          ),
-          body: newVMUserImages.toMap());
+      final req = http.MultipartRequest(
+        "POST",
+        Uri.parse(
+          DataProvider.authenticate,
+        ),
+      );
+      log(newVMUserImages.image1.path);
+      log(newVMUserImages.image2.path);
+      log(newVMUserImages.image3.path);
+      req.fields['user'] = newVMUserImages.user.toString();
+      req.files.add(await http.MultipartFile.fromPath(
+          "image1", newVMUserImages.image1.path,
+          contentType: MediaType('image', 'jpg')));
+      req.files.add(await http.MultipartFile.fromPath(
+          "image2", newVMUserImages.image2.path,
+          contentType: MediaType('image', 'jpg')));
+      req.files.add(await http.MultipartFile.fromPath(
+          "image3", newVMUserImages.image3.path,
+          contentType: MediaType('image', 'jpg')));
 
-      if (res.statusCode == 201) return VMUserImages.fromJson(res.body);
+      final res = await req.send();
+
+      final resStr = await res.stream.bytesToString();
+      log(res.statusCode.toString());
+      if (res.statusCode == 201) {
+        return VMUserImages.fromJson(resStr);
+      }
+
       throw "An error occurred";
     } catch (e) {
+      log(e.toString());
       throw e.toString();
     }
   }
@@ -126,26 +148,19 @@ class UserServices {
   static Future<AuthenticateRes> authenticate(
       {required File image, required String deviceId}) async {
     try {
-//       log('Original path: ${image.path}');
-//       String dir = path.dirname(image.path);
-//       String newPath = path.join(dir, 'case01wd03id01.jpg');
-// print('NewPath: $newPath');
-//       image.renameSync(newPath);
-//       log(image.path);
       final req = http.MultipartRequest(
         "POST",
         Uri.parse(
           DataProvider.authenticate,
         ),
       );
-      req.fields['device'] = "123";
+      req.fields['device'] = deviceId;
       req.files.add(await http.MultipartFile.fromPath("image", image.path,
           contentType: MediaType('image', 'jpg')));
 
       final res = await req.send();
 
       final resStr = await res.stream.bytesToString();
-      log(resStr);
 
       if (res.statusCode == 200) return AuthenticateRes.fromJson(resStr);
       throw "An error occurred";

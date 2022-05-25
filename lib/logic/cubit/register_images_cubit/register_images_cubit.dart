@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
@@ -26,9 +27,10 @@ class RegisterImagesCubit extends Cubit<RegisterImagesState> {
       if (userType != "user") {
         deviceId = await SharedServices.getDeviceId();
       }
+
       final VMUserImages vmUserImages =
           await UserServices.addVMUserImages(newVMUserImages: newVMUserImages);
-
+      log(vmUserImages.toString());
       final AuthenticateRes authenticateRes =
           await UserServices.authenticate(image: image4, deviceId: deviceId);
 

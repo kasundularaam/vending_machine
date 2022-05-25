@@ -18,6 +18,7 @@ dependencies:
   flutter_credit_card: ^3.0.1
   http: ^0.13.4
   image_picker: ^0.8.4+9
+  path_provider: ^2.0.10
   shared_preferences: ^2.0.14
   sizer: ^2.0.15
 
