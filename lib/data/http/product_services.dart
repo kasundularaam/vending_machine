@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:http/http.dart' as http;
 
 import '../../core/converters/http_list_converter.dart';

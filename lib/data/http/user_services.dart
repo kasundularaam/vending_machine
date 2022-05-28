@@ -97,26 +97,27 @@ class UserServices {
       final req = http.MultipartRequest(
         "POST",
         Uri.parse(
-          DataProvider.authenticate,
+          DataProvider.registerImages,
         ),
       );
       log(newVMUserImages.image1.path);
       log(newVMUserImages.image2.path);
       log(newVMUserImages.image3.path);
-      req.fields['user'] = newVMUserImages.user.toString();
+      // req.fields['user'] = newVMUserImages.user;
       req.files.add(await http.MultipartFile.fromPath(
           "image1", newVMUserImages.image1.path,
-          contentType: MediaType('image', 'jpg')));
+          contentType: MediaType('image', 'jpeg')));
       req.files.add(await http.MultipartFile.fromPath(
           "image2", newVMUserImages.image2.path,
-          contentType: MediaType('image', 'jpg')));
+          contentType: MediaType('image', 'jpeg')));
       req.files.add(await http.MultipartFile.fromPath(
           "image3", newVMUserImages.image3.path,
-          contentType: MediaType('image', 'jpg')));
+          contentType: MediaType('image', 'jpeg')));
 
       final res = await req.send();
 
       final resStr = await res.stream.bytesToString();
+      log(resStr);
       log(res.statusCode.toString());
       if (res.statusCode == 201) {
         return VMUserImages.fromJson(resStr);
@@ -156,7 +157,7 @@ class UserServices {
       );
       req.fields['device'] = deviceId;
       req.files.add(await http.MultipartFile.fromPath("image", image.path,
-          contentType: MediaType('image', 'jpg')));
+          contentType: MediaType('image', 'jpeg')));
 
       final res = await req.send();
 

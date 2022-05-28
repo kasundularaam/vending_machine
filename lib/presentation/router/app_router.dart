@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:vending_machine/logic/cubit/sign_out_cubit/sign_out_cubit.dart';
 
 import '../../core/exceptions/route_exception.dart';
-import '../../data/models/product.dart';
 import '../../data/models/vm_user.dart';
 import '../../logic/cubit/device_id_cubit/device_id_cubit.dart';
 import '../../logic/cubit/face_id_auth_cubit/face_id_auth_cubit.dart';
@@ -21,7 +19,9 @@ import '../screens/auth/take_pictures_screen/take_pictures_page.dart';
 import '../screens/device_id_screen/device_id_page.dart';
 import '../screens/home_screen/home_page.dart';
 import '../screens/landing_screen/landing_page.dart';
-import '../screens/payment_screen/payment_page.dart';
+import '../screens/payments/select_payment_method_screen/select_payment_method_screen.dart';
+import '../screens/payments/via_card_screen/via_card_page.dart';
+import '../screens/payments/via_points_screen/via_points_page.dart';
 import '../screens/scanner_screen/scanner_page.dart';
 
 class AppRouter {
@@ -31,6 +31,9 @@ class AppRouter {
   static const String registerPage = '/registerPage';
   static const String faceIdAuthPage = '/faceIdAuthPage';
   static const String paymentPage = '/paymentPage';
+  static const String selectPaymentMethodScreen = '/selectPaymentMethodScreen';
+  static const String viaPointsPage = '/viaPointsPage';
+  static const String viaCardPage = '/viaCardPage';
   static const String takePicturesPage = '/takePicturesPage';
   static const String deviceIdPage = '/deviceIdPage';
   static const String scannerPage = '/scannerPage';
@@ -84,13 +87,34 @@ class AppRouter {
             child: const RegisterPage(),
           ),
         );
-      case paymentPage:
-        Product product = settings.arguments as Product;
+
+      case selectPaymentMethodScreen:
+        Map<String, dynamic> args = settings.arguments as Map<String, dynamic>;
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
             create: (context) => TimerCubit(),
-            child: PaymentPage(
-              product: product,
+            child: SelectPaymentMethodScreen(
+                product: args["product"], vmUser: args["user"]),
+          ),
+        );
+
+      case viaPointsPage:
+        Map<String, dynamic> args = settings.arguments as Map<String, dynamic>;
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (context) => TimerCubit(),
+            child: ViaPointsPage(
+              product: args["product"],
+            ),
+          ),
+        );
+      case viaCardPage:
+        Map<String, dynamic> args = settings.arguments as Map<String, dynamic>;
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (context) => TimerCubit(),
+            child: ViaCardPage(
+              product: args["product"],
             ),
           ),
         );

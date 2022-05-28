@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
+import 'package:vending_machine/data/models/vm_user.dart';
+
 import '../../../../core/constants/app_colors.dart';
 import '../../../../data/models/product.dart';
 import '../../../global_widgets/check_out_button.dart';
@@ -9,10 +11,12 @@ import '../../../router/app_router.dart';
 class HomeCard extends StatelessWidget {
   final Product product;
   final String categoryTitle;
+  final VMUser vmUser;
   const HomeCard({
     Key? key,
     required this.product,
     required this.categoryTitle,
+    required this.vmUser,
   }) : super(key: key);
 
   @override
@@ -108,8 +112,12 @@ class HomeCard extends StatelessWidget {
                         CheckOutButton(
                           onPress: () {
                             Navigator.pop(sheetContext);
-                            Navigator.pushNamed(context, AppRouter.paymentPage,
-                                arguments: product);
+                            Navigator.pushNamed(
+                                context, AppRouter.selectPaymentMethodScreen,
+                                arguments: {
+                                  "product": product,
+                                  "user": vmUser
+                                });
                           },
                           text: "Proceed To Pay",
                         )

@@ -28,16 +28,18 @@ class RegisterImagesCubit extends Cubit<RegisterImagesState> {
         deviceId = await SharedServices.getDeviceId();
       }
 
-      final VMUserImages vmUserImages =
-          await UserServices.addVMUserImages(newVMUserImages: newVMUserImages);
+      final VMUserImages vmUserImages = await UserServices.addVMUserImages(
+        newVMUserImages: newVMUserImages,
+      );
       log(vmUserImages.toString());
       final AuthenticateRes authenticateRes =
           await UserServices.authenticate(image: image4, deviceId: deviceId);
 
       if (authenticateRes.id != "Unknown") {
         int authId = int.parse(authenticateRes.id.split("_")[0]);
+        log(authId.toString());
 
-        if (vmUserImages.user == authId) {
+        if (newVMUserImages.user == authId) {
           if (userType == "user") {
             await SharedServices.addUser(uid: vmUser.id);
             emit(

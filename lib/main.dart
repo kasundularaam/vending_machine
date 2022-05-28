@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:sizer/sizer.dart';
+import 'package:vending_machine/core/private/keys.dart';
 
 import 'core/constants/strings.dart';
 import 'core/themes/app_theme.dart';
 import 'presentation/router/app_router.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  Stripe.publishableKey = publishKey;
   runApp(const App());
 }
 
