@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
@@ -10,7 +9,6 @@ import '../models/new_vm_user.dart';
 import '../models/new_vm_user_images.dart';
 import '../models/vm_user.dart';
 import '../models/vm_user_images.dart';
-// import 'package:path/path.dart' as path;
 
 class UserServices {
   static Future<VMUser> getVMUser({required int uid}) async {
@@ -100,10 +98,6 @@ class UserServices {
           DataProvider.registerImages,
         ),
       );
-      log(newVMUserImages.image1.path);
-      log(newVMUserImages.image2.path);
-      log(newVMUserImages.image3.path);
-      // req.fields['user'] = newVMUserImages.user;
       req.files.add(await http.MultipartFile.fromPath(
           "image1", newVMUserImages.image1.path,
           contentType: MediaType('image', 'jpeg')));
@@ -117,15 +111,12 @@ class UserServices {
       final res = await req.send();
 
       final resStr = await res.stream.bytesToString();
-      log(resStr);
-      log(res.statusCode.toString());
       if (res.statusCode == 201) {
         return VMUserImages.fromJson(resStr);
       }
 
       throw "An error occurred";
     } catch (e) {
-      log(e.toString());
       throw e.toString();
     }
   }
@@ -166,7 +157,6 @@ class UserServices {
       if (res.statusCode == 200) return AuthenticateRes.fromJson(resStr);
       throw "An error occurred";
     } catch (e) {
-      log(e.toString());
       throw e.toString();
     }
   }

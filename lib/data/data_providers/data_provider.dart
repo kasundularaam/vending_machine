@@ -31,7 +31,7 @@ class DataProvider {
 
   //USER
 
-  static String get cart => "$baseUrl/cart/cart";
+  static String get cart => "$baseUrl/cart/cart/";
   static String cartById(int id) => "$baseUrl/cart/cart/$id/";
 
   //CHECKOUT

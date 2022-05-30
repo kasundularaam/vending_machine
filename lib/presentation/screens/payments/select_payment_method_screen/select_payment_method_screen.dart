@@ -6,6 +6,7 @@ import 'package:vending_machine/data/models/vm_user.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../data/models/product.dart';
+import '../../../../logic/cubit/purchase_cubit/purchase_cubit.dart';
 import '../../../../logic/cubit/timer_cubit/timer_cubit.dart';
 import '../../../router/app_router.dart';
 import '../widgets/order_details_card.dart';
@@ -63,45 +64,49 @@ class _SelectPaymentMethodScreenState extends State<SelectPaymentMethodScreen> {
                     OrderDetailsCard(product: product),
                     Expanded(
                       child: Container(
-                          decoration: BoxDecoration(
-                              color: AppColors.lightElv1,
-                              borderRadius: BorderRadius.vertical(
-                                  top: Radius.circular(5.w))),
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 5.w),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  height: 5.h,
-                                ),
-                                Text(
-                                  "Select payment method",
-                                  style: TextStyle(
-                                      color: AppColors.darkElv1,
-                                      fontSize: 14.sp,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                SizedBox(
-                                  height: 2.h,
-                                ),
-                                MethodPoints(
+                        decoration: BoxDecoration(
+                            color: AppColors.lightElv1,
+                            borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(5.w))),
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 5.w),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                height: 5.h,
+                              ),
+                              Text(
+                                "Select payment method",
+                                style: TextStyle(
+                                    color: AppColors.darkElv1,
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(
+                                height: 2.h,
+                              ),
+                              BlocProvider(
+                                create: (context) => PurchaseCubit(),
+                                child: MethodPoints(
                                   vmUser: user,
                                   product: product,
                                 ),
-                                SizedBox(
-                                  height: 2.h,
-                                ),
-                                MethodCard(
-                                  vmUser: user,
-                                  product: product,
-                                ),
-                                SizedBox(
-                                  height: 2.h,
-                                ),
-                              ],
-                            ),
-                          )),
+                              ),
+                              SizedBox(
+                                height: 2.h,
+                              ),
+                              MethodCard(
+                                vmUser: user,
+                                product: product,
+                              ),
+                              SizedBox(
+                                height: 2.h,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     )
                   ],
                 ),
